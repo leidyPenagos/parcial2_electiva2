@@ -7,6 +7,9 @@ import 'dotenv/config';
 import Persona from './models/Persona.mjs';
 import personaRoutes from './routes/personaRoutes.mjs';
 
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDocument } from './swagger.mjs';
+
 // Configuración de rutas del proyecto
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +31,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Leer datos enviados desde formularios y peticiones JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Documentación interactiva de Swagger
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+); 
 
 // Página principal
 app.get('/', (req, res) => {
