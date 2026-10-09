@@ -1,0 +1,182 @@
+
+<%- include('templates/header', { titulo: 'Familia | Árbol Genealógico' }) %>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <div>
+    <h1 class="h2 fw-bold">Mi árbol genealógico</h1>
+    <p class="text-secondary mb-0">
+      Consulta las relaciones familiares hasta el segundo grado.
+    </p>
+  </div>
+
+  <a href="/personas" class="btn btn-outline-primary">
+    Volver a personas
+  </a>
+</div>
+
+<!-- Persona principal -->
+<div class="card border-0 shadow-sm mb-4">
+  <div class="card-body text-center p-4">
+    <div class="display-4 mb-2">👤</div>
+
+    <h2 class="h3 fw-bold">
+      <%= persona.nombres %> <%= persona.apellidos %>
+    </h2>
+
+    <p class="text-secondary mb-1">
+      Fecha de nacimiento:
+      <%= persona.fechaNacimiento
+        ? new Date(persona.fechaNacimiento).toLocaleDateString('es-CO')
+        : 'No registrada' %>
+    </p>
+
+    <span class="badge text-bg-primary">Persona principal</span>
+  </div>
+</div>
+
+<!-- Primer grado -->
+<h2 class="h4 fw-bold mb-3">Familiares de primer grado</h2>
+
+<div class="row g-4 mb-5">
+
+  <!-- Padres -->
+  <div class="col-md-6">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h3 class="h5 mb-0">👨‍👩‍👧 Padres</h3>
+      </div>
+
+      <div class="card-body">
+        <% if (primerGrado.padres.length > 0) { %>
+          <% primerGrado.padres.forEach(familiar => { %>
+            <div class="border rounded-3 p-3 mb-2">
+              <strong>
+                <%= familiar.nombres %> <%= familiar.apellidos %>
+              </strong>
+              <div class="mt-2">
+                <a href="/personas/<%= familiar._id %>/familia"
+                   class="btn btn-sm btn-outline-primary">
+                  Ver familia
+                </a>
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-secondary mb-0">
+            No hay padres registrados.
+          </p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hijos -->
+  <div class="col-md-6">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h3 class="h5 mb-0">👶 Hijos</h3>
+      </div>
+
+      <div class="card-body">
+        <% if (primerGrado.hijos.length > 0) { %>
+          <% primerGrado.hijos.forEach(familiar => { %>
+            <div class="border rounded-3 p-3 mb-2">
+              <strong>
+                <%= familiar.nombres %> <%= familiar.apellidos %>
+              </strong>
+              <div class="mt-2">
+                <a href="/personas/<%= familiar._id %>/familia"
+                   class="btn btn-sm btn-outline-success">
+                  Ver familia
+                </a>
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-secondary mb-0">
+            No hay hijos registrados.
+          </p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Segundo grado -->
+<h2 class="h4 fw-bold mb-3">Familiares de segundo grado</h2>
+
+<div class="row g-4 mb-4">
+
+  <!-- Hermanos -->
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-header bg-info text-dark">
+        <h3 class="h5 mb-0">🧑‍🤝‍🧑 Hermanos</h3>
+      </div>
+
+      <div class="card-body">
+        <% if (segundoGrado.hermanos.length > 0) { %>
+          <% segundoGrado.hermanos.forEach(familiar => { %>
+            <p class="border-bottom pb-2">
+              <strong>
+                <%= familiar.nombres %> <%= familiar.apellidos %>
+              </strong>
+            </p>
+          <% }) %>
+        <% } else { %>
+          <p class="text-secondary">No hay hermanos registrados.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abuelos -->
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-header bg-warning text-dark">
+        <h3 class="h5 mb-0">👴 Abuelos</h3>
+      </div>
+
+      <div class="card-body">
+        <% if (segundoGrado.abuelos.length > 0) { %>
+          <% segundoGrado.abuelos.forEach(familiar => { %>
+            <p class="border-bottom pb-2">
+              <strong>
+                <%= familiar.nombres %> <%= familiar.apellidos %>
+              </strong>
+            </p>
+          <% }) %>
+        <% } else { %>
+          <p class="text-secondary">No hay abuelos registrados.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nietos -->
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-header bg-secondary text-white">
+        <h3 class="h5 mb-0">👧 Nietos</h3>
+      </div>
+
+      <div class="card-body">
+        <% if (segundoGrado.nietos.length > 0) { %>
+          <% segundoGrado.nietos.forEach(familiar => { %>
+            <p class="border-bottom pb-2">
+              <strong>
+                <%= familiar.nombres %> <%= familiar.apellidos %>
+              </strong>
+            </p>
+          <% }) %>
+        <% } else { %>
+          <p class="text-secondary">No hay nietos registrados.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%- include('templates/footer') %>

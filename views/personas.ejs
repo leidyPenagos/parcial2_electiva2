@@ -1,0 +1,70 @@
+ <%- include('templates/header', { titulo: 'Personas registradas' }) %>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <h1 class="h2 fw-bold">Personas registradas</h1>
+    <p class="text-secondary mb-0">Consulta los integrantes de tu árbol familiar.</p>
+  </div>
+  <a href="/personas/nueva" class="btn btn-primary">+ Nueva persona</a>
+</div>
+
+<% if (personas && personas.length > 0) { %>
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-primary">
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha de nacimiento</th>
+            <th>Sexo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% personas.forEach(persona => { %>
+            <tr>
+              <td><%= persona.nombres %></td>
+              <td><%= persona.apellidos %></td>
+              <td>
+                <%= persona.fechaNacimiento
+                  ? new Date(persona.fechaNacimiento).toLocaleDateString('es-CO')
+                  : 'No registrada' %>
+              </td>
+              <td><%= persona.sexo || 'No especificado' %></td>
+              <td class="text-nowrap">
+                <a href="/personas/<%= persona._id %>/familia"
+                   class="btn btn-sm btn-outline-primary mb-1">
+                  Ver familia
+                </a>
+
+                <a href="/personas/<%= persona._id %>/editar"
+                   class="btn btn-sm btn-outline-secondary mb-1">
+                  Editar
+                </a>
+
+                <form
+                  action="/personas/<%= persona._id %>/eliminar"
+                  method="POST"
+                  class="d-inline"
+                  onsubmit="return confirm('¿Seguro que deseas eliminar a esta persona? Se quitarán sus referencias como padre o madre.');"
+                >
+                  <button type="submit" class="btn btn-sm btn-danger mb-1">
+                    Eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% } else { %>
+  <div class="alert alert-info">
+    Todavía no hay personas registradas.
+    <a href="/personas/nueva" class="alert-link">Registra la primera.</a>
+  </div>
+<% } %>
+
+<%- include('templates/footer') %>

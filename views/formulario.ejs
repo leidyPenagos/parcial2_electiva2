@@ -1,0 +1,154 @@
+
+<%- include('templates/header', { titulo: persona ? 'Editar persona' : 'Registrar persona' }) %>
+
+<div class="container py-4">
+  <h1 class="h2 fw-bold mb-4">
+    <%= persona ? 'Editar persona' : 'Registrar una persona' %>
+  </h1>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-danger" role="alert">
+      <%= error %>
+    </div>
+  <% } %>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+
+      <form
+        action="<%= persona && persona._id ? '/personas/' + persona._id + '/editar' : '/personas' %>"
+        method="POST"
+      >
+        <div class="row g-3">
+
+          <!-- Nombres -->
+          <div class="col-md-6">
+            <label for="nombres" class="form-label">Nombres</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombres"
+              name="nombres"
+              value="<%= persona && persona.nombres ? persona.nombres : '' %>"
+              required
+            >
+          </div>
+
+          <!-- Apellidos -->
+          <div class="col-md-6">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apellidos"
+              name="apellidos"
+              value="<%= persona && persona.apellidos ? persona.apellidos : '' %>"
+              required
+            >
+          </div>
+
+          <!-- Fecha de nacimiento -->
+          <div class="col-md-6">
+            <label for="fechaNacimiento" class="form-label">
+              Fecha de nacimiento
+            </label>
+            <input
+              type="date"
+              class="form-control"
+              id="fechaNacimiento"
+              name="fechaNacimiento"
+              value="<%= persona && persona.fechaNacimiento ? new Date(persona.fechaNacimiento).toISOString().slice(0, 10) : '' %>"
+            >
+          </div>
+
+          <!-- Sexo -->
+          <div class="col-md-6">
+            <label for="sexo" class="form-label">Sexo</label>
+            <select
+              class="form-select"
+              id="sexo"
+              name="sexo"
+              required
+            >
+              <option value="">Selecciona una opción</option>
+
+              <option
+                value="masculino"
+                <%= persona && persona.sexo === 'masculino' ? 'selected' : '' %>
+              >
+                Masculino
+              </option>
+
+              <option
+                value="femenino"
+                <%= persona && persona.sexo === 'femenino' ? 'selected' : '' %>
+              >
+                Femenino
+              </option>
+
+              <option
+                value="otro"
+                <%= !persona || !persona.sexo || persona.sexo === 'otro' ? 'selected' : '' %>
+              >
+                Otro
+              </option>
+            </select>
+          </div>
+
+          <!-- Padre -->
+          <div class="col-md-6">
+            <label for="padre" class="form-label">Padre</label>
+            <select class="form-select" id="padre" name="padre">
+              <option value="">Sin registrar</option>
+
+              <% personas.forEach(p => { %>
+                <% if (!persona || String(p._id) !== String(persona._id)) { %>
+                  <option
+                    value="<%= p._id %>"
+                    <%= persona && persona.padre && String(persona.padre._id || persona.padre) === String(p._id) ? 'selected' : '' %>
+                  >
+                    <%= p.nombres %> <%= p.apellidos %>
+                  </option>
+                <% } %>
+              <% }) %>
+            </select>
+          </div>
+
+          <!-- Madre -->
+          <div class="col-md-6">
+            <label for="madre" class="form-label">Madre</label>
+            <select class="form-select" id="madre" name="madre">
+              <option value="">Sin registrar</option>
+
+              <% personas.forEach(p => { %>
+                <% if (!persona || String(p._id) !== String(persona._id)) { %>
+                  <option
+                    value="<%= p._id %>"
+                    <%= persona && persona.madre && String(persona.madre._id || persona.madre) === String(p._id) ? 'selected' : '' %>
+                  >
+                    <%= p.nombres %> <%= p.apellidos %>
+                  </option>
+                <% } %>
+              <% }) %>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Botones -->
+        <div class="mt-4 d-flex gap-2 flex-wrap">
+          <button type="submit" class="btn btn-primary">
+            <%= persona ? 'Guardar cambios' : 'Guardar persona' %>
+          </button>
+
+          <a href="/personas" class="btn btn-outline-secondary">
+            Cancelar
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('templates/footer') %>

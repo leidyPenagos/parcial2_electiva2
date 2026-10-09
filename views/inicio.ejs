@@ -1,0 +1,49 @@
+<%- include('templates/header', { titulo: 'Inicio | Árbol Genealógico' }) %>
+
+<div class="p-5 mb-4 bg-white rounded-4 shadow-sm">
+  <div class="container-fluid py-3">
+    <span class="badge text-bg-success mb-3">Sistema genealógico</span>
+    <h1 class="display-5 fw-bold">Conoce tu historia familiar</h1>
+    <p class="col-md-8 fs-5 text-secondary">
+      Registra a tus familiares, consulta sus datos y descubre las relaciones
+      familiares hasta el segundo grado de consanguinidad.
+    </p>
+    <a class="btn btn-primary btn-lg" href="/personas">
+      Ver personas
+    </a>
+    <a class="btn btn-outline-primary btn-lg ms-2" href="/personas/nueva">
+      Registrar familiar
+    </a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">👨‍👩‍👧‍👦 Familia</h5>
+        <p class="card-text">Consulta la información de las personas registradas.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">📝 Registro</h5>
+        <p class="card-text">Agrega nombres, apellidos, fecha de nacimiento y padres.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">🌳 Parentesco</h5>
+        <p class="card-text">Explora padres, hijos, hermanos, abuelos y nietos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('templates/footer') %>

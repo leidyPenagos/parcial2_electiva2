@@ -1,0 +1,20 @@
+body {
+min-height: 100vh;
+}
+
+.navbar-brand {
+letter-spacing: 0.2px;
+}
+
+.card {
+border-radius: 1rem;
+}
+
+.btn {
+border-radius: 0.6rem;
+}
+
+.table th,
+.table td {
+padding: 0.9rem;
+}
